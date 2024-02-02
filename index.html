@@ -10,6 +10,7 @@ Tu navegador no soporta el elemento canvas de HTML5.
 
 <button id="borrar">Borrar</button>
 <button id="reconocer">Reconocer texto</button>
+<button id="guardar">Guardar imagen</button>
 
 <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 
@@ -67,6 +68,14 @@ document.getElementById('reconocer').addEventListener('click', function() {
     ).then(({ data: { text } }) => {
       console.log(text);
     })
+});
+
+document.getElementById('guardar').addEventListener('click', function() {
+    var dataURL = canvas.toDataURL('image/png');
+    var link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'mi_dibujo.png';
+    link.click();
 });
 </script>
 
