@@ -6,6 +6,75 @@
     <title>otro</title>
 </head>
 <body>
-    
+    <canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+        Tu navegador no soporta el elemento canvas de HTML5.
+        </canvas>
+        
+        <button id="borrar">Borrar</button>
+        <button id="guardar">Guardar imagen</button>
+        <button id="guardar">Guardar imagen</button>
+
+        <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+
+        <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        
+        var pintar = false;
+        var x = 0;
+        var y = 0;
+        
+        // Eventos para ratón
+        canvas.addEventListener('mousedown', empezarDibujo, false);
+        canvas.addEventListener('mousemove', dibujar, false);
+        canvas.addEventListener('mouseup', terminarDibujo, false);
+        
+        // Eventos para pantalla táctil
+        canvas.addEventListener('touchstart', empezarDibujo, false);
+        canvas.addEventListener('touchmove', dibujar, false);
+        canvas.addEventListener('touchend', terminarDibujo, false);
+        
+        function empezarDibujo(e) {
+            x = e.clientX - canvas.getBoundingClientRect().left;
+            y = e.clientY - canvas.getBoundingClientRect().top;
+            pintar = true;
+        }
+        
+        function dibujar(e) {
+            if (pintar) {
+                var x2 = e.clientX - canvas.getBoundingClientRect().left;
+                var y2 = e.clientY - canvas.getBoundingClientRect().top;
+                ctx.beginPath();
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                ctx.moveTo(x, y);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                ctx.closePath();
+                x = x2;
+                y = y2;
+            }
+        }
+        
+        function terminarDibujo(e) {
+            if (pintar) {
+                dibujar(e);
+                pintar = false;
+            }
+        }
+        
+        document.getElementById('borrar').addEventListener('click', function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+        
+        document.getElementById('guardar').addEventListener('click', function() {
+            var dataURL = canvas.toDataURL('image/png');
+            var link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'mi_dibujo.png';
+            link.click();
+        });
+        </script>
+        
 </body>
 </html>
