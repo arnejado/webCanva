@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <style>
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            grid-column-gap: 2px;
+            grid-row-gap: 2px;
+            }
+
+        .canvas { grid-area: 1 / 1 / 2 / 4; }
+        .borrar { grid-area: 2 / 1 / 3 / 2; }
+        .guardar { grid-area: 2 / 2 / 3 / 3; }
+        .reconocer { grid-area: 2 / 3 / 3 / 4; }
+    </style>
+</head>
 <body>
 
-<canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+<canvas class= "canvas" id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
     Tu navegador no soporta el elemento canvas de HTML5.
 </canvas>
 
-<button id="borrar">Borrar</button>
-<button id="guardar">Guardar imagen</button>
-<button id="reconocer">Reconocer</button>
+<button class="guardar" id="guardar">Guardar imagen</button>
+<button class="borrar" id="borrar">Borrar</button>
+<button class="reconocer" id="reconocer">Reconocer</button>
 
 <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 
