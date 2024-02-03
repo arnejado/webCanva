@@ -3,17 +3,18 @@
 <head>
     <style>
         .cuerpo {
-            max-width: 500px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 2fr 1fr);
             grid-column-gap: 2px;
             grid-row-gap: 10px;
-            }
+            width: 750px;
+        }
 
         .canvas { grid-area: 1 / 1 / 2 / 5; 
             border-radius: 25px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);                    
+            
         }
             
         .borrar { grid-area: 2 / 1 / 3 / 2; }
@@ -41,7 +42,7 @@
 </head>
 <body>
 <div class="cuerpo">
-    <canvas class= "canvas" id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+    <canvas class= "canvas" id="canvas" height="750px" width="750px" style="border:1px solid #d3d3d3;">
         Tu navegador no soporta el elemento canvas de HTML5.
     </canvas>
 
@@ -59,6 +60,12 @@ var ctx = canvas.getContext('2d');
 var pintar = false;
 var x = 0;
 var y = 0;
+
+// evento para que el canva cambie con cada resize
+window.addEventListener('resize', function() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+});
 
 // Eventos para ratón
 canvas.addEventListener('mousedown', empezarDibujo, false);
