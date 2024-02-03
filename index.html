@@ -54,6 +54,9 @@
 <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 
 <script>
+
+import * as Tesseract from 'tesseract.js';
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
@@ -128,19 +131,28 @@ document.getElementById('guardar').addEventListener('click', function() {
 });
 
 document.getElementById('reconocer').addEventListener('click', function() {
-    var dataURL = canvas.toDataURL();
-    Tesseract.recognize(
-      dataURL,
-      'eng',
-      { logger: m => console.log(m) }
-    ).then(({ data: { text } }) => {
-      console.log(text);
-      textoReconocido = text; // Guarda el texto reconocido en la variable
-    })
-    .catch(error => {
-      console.error('Error al reconocer el texto:', error);
-    });
+    let canvas = document.getElementById("canvas");
+    let imagen = canvas.toDataURL();
+
+    let cifra = funcionOCR(imagen);
+
+    console.log(cifra);
 });
+
+
+function funcionOCR(imagen) {
+    // Inicia el reconocimiento de texto
+    Tesseract.recognize(
+        imagen,
+        'spa', // Idioma del texto a reconocer
+        { logger: m => console.log(m) } // Opciones de Tesseract
+    ).then(({ data: { text } }) => {
+        // 'text' contiene el texto reconocido
+        console.log(text);
+});
+
+}
+
 
 </script>
 
