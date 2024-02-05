@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+
     <style>
         .cuerpo {
             display: grid;
@@ -51,12 +53,10 @@
     <button class="pasar" id="pasar">Pasar</button>
     <button class="reconocer" id="reconocer">Reconocer</button>
 </div>
-<script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
 
 <script>
 
-import * as Tesseract from 'tesseract.js';
-
+// import * as Tesseract from 'tesseract.js'
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 
