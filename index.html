@@ -53,12 +53,18 @@
     <button class="pasar" id="pasar">Pasar</button>
     <button class="reconocer" id="reconocer">Reconocer</button>
 </div>
-
+<div id="divPasar">
+    <p>Aquí estamos</p>
+</div>
+</body>
 <script>
 
 // import * as Tesseract from 'tesseract.js'
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var divPasar = document.getElementById('divPasar');
+console.log(divPasar);
+
 
 var pintar = false;
 var x = 0;
@@ -119,6 +125,8 @@ function terminarDibujo(e) {
 }
 
 document.getElementById('borrar').addEventListener('click', function() {
+    console.log("entrando en borrar");
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
@@ -131,30 +139,63 @@ document.getElementById('guardar').addEventListener('click', function() {
 });
 
 document.getElementById('reconocer').addEventListener('click', function() {
+    console.log("entrando en reconocer");
     let canvas = document.getElementById("canvas");
     let imagen = canvas.toDataURL();
+    
+    // Creas un nuevo trabajador de Tesseract
+    const rec = new Tesseract.TesseractWorker();
 
-    let cifra = funcionOCR(imagen);
+// Inicias el reconocimiento de texto en la imagen
+    rec.recognize(imagen)
+    .progress(function (response) {
+        if(response.status == 'recognizing text'){
+            console.log(response.status + '   ' + response.progress);
+        }else{
+            console.log(response.status);
+        }
+    })
+    .then(function (data) {
+        console.log(data.text);
+    });
 
-    console.log(cifra);
+
+
+    console.log(imagen);
 });
 
 
-function funcionOCR(imagen) {
-    // Inicia el reconocimiento de texto
-    Tesseract.recognize(
-        imagen,
-        'spa', // Idioma del texto a reconocer
-        { logger: m => console.log(m) } // Opciones de Tesseract
-    ).then(({ data: { text } }) => {
-        // 'text' contiene el texto reconocido
-        console.log(text);
+document.getElementById('pasar').addEventListener('click', function() {
+    console.log("entrando en pasar");
+    let canvas = document.getElementById("canvas");
+    let imagenpasar = canvas.toDataURL();
+
+    // let cifra = funcionOCR(imagen);
+
+    console.log(imagenpasar);
+
+    var nuevaImagen = document.createElement('img');
+    nuevaImagen.src = imagenpasar;
+    divPasar.appendChild(nuevaImagen);
+
+
 });
 
-}
+
+// function funcionOCR(imagen) {
+//     // Inicia el reconocimiento de texto
+//     Tesseract.recognize(
+//         imagen,
+//         'spa', // Idioma del texto a reconocer
+//         { logger: m => console.log(m) } // Opciones de Tesseract
+//     ).then(({ data: { text } }) => {
+//         // 'text' contiene el texto reconocido
+//         console.log(text);
+// });
+// }
 
 
 </script>
 
-</body>
+
 </html>
